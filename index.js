@@ -25,9 +25,9 @@
         ctx1.fillStyle = 'white';
         ctx1.fill();
 
-        // Clouds
+        
         moveClouds();
-        // moveClouds();
+        
     }
 
     // Clouds
@@ -53,8 +53,7 @@
         i+=0.4;
         drawCloud(cloudX, 100);
         drawCloud(cloudX+350+i, 70);
-        // drawCloud(cloudX - canvas1.width, 100);
-        // drawCloud(cloudX + canvas1.width, 300);
+       
     }
 
     // Buildings
@@ -64,7 +63,7 @@
         ctx1.fillRect(x, y - height, width+20, height);
 
         // Windows
-        const numWindows = Math.floor(height / 40); // Number of windows based on building height
+        const numWindows = Math.floor(height / 40);
         const windowWidth = width / 5;
         const windowHeight = height / numWindows;
         let k=10;
@@ -73,26 +72,21 @@
             for (let j = 0; j < 4; j++) {
                 ctx1.fillRect(x + j * (windowWidth + 10)+5 , y+k - height + i * windowHeight + 10, windowWidth, windowHeight-k);
             }
-        //     ctx1.fillStyle = 'grey';
-        // for (let j = 0; j < 4; j++) {
-        //     ctx1.fillRect(x + j * (windowWidth + 10) + windowWidth + 5, y - height + i * windowHeight + 10, 2, 10);
-        // }  
-        //    k+=10;  
+     
      }
     }
 
     // Draw scene
     const stars = [];
     const numStars = 100;
-    
-    // Create initial stars
+
     for (let i = 0; i < numStars; i++) {
         stars.push({
             x: Math.random() * canvas1.width,
             y: Math.random() * canvas1.height/1.5,
             radius: Math.random() * 2,
-            opacity: Math.random() * 0.5 + 0.5, // Random opacity between 0.5 and 1
-            speed: Math.random() * 0.1 + 0.05 // Random speed between 0.05 and 0.15
+            opacity: Math.random() * 0.5 + 0.5, 
+            speed: Math.random() * 0.1 + 0.05 
         });
     }
     
@@ -100,7 +94,7 @@
     function updateStars() {
         for (let i = 0; i < numStars; i++) {
             stars[i].opacity += stars[i].speed;
-            if (stars[i].opacity > 1 || stars[i].opacity < 0.5) { // Reverse opacity when it reaches the limits
+            if (stars[i].opacity > 1 || stars[i].opacity < 0.5) { 
                 stars[i].speed *= -1;
             }
         }
@@ -203,46 +197,40 @@
 
     function drawFirecracker() {
     if (firecracker !== null) {
-        // Save the current state of the canvas1
         ctx1.save();
         angle=firecracker.angle;
-        // Translate to the position of the firecracker
+        
         ctx1.translate(firecracker.x, firecracker.y);
 
-        // Rotate the canvas1 by the specified angle (in radians)
         ctx1.rotate(angle * Math.PI / 180);
 
-        // Define gradient colors for the rocket body
         const gradient = ctx1.createLinearGradient(0, -25, 0, 25);
         gradient.addColorStop(0, 'red');
         gradient.addColorStop(0.5, 'orange');
         gradient.addColorStop(1, 'yellow');
 
-        // Set the fill style to the gradient
         ctx1.fillStyle='red';
-        // Draw rocket body (conical top)
+        
         ctx1.beginPath();
-        ctx1.moveTo(0, -30); // Top left corner
-        ctx1.lineTo(20, -30); // Bottom left corner
-        ctx1.lineTo(10, -50); // Top right corner
+        ctx1.moveTo(0, -30); 
+        ctx1.lineTo(20, -30); 
+        ctx1.lineTo(10, -50);
         
         ctx1.fillStyle = gradient;
         
-        ctx1.moveTo(1.5, -30); // Top left corner
-        ctx1.lineTo(1.5 ,  0); // Top right corner
-        ctx1.lineTo(18.5, 0); // Bottom left corner
-        ctx1.lineTo(18.5, -30); // Bottom left corner
+        ctx1.moveTo(1.5, -30); 
+        ctx1.lineTo(1.5 ,  0); 
+        ctx1.lineTo(18.5, 0); 
+        ctx1.lineTo(18.5, -30); 
         ctx1.fill();
         
 
         ctx1.closePath();
 
 
-        // Draw rocket stick (rectangular bottom)
         ctx1.fillStyle = 'grey';
-        ctx1.fillRect(3, 0, 4, 30); // Rectangle for stick
+        ctx1.fillRect(3, 0, 4, 30); 
 
-        // Restore the canvas1 state to its previous state
         ctx1.restore();
     }
 }
@@ -268,14 +256,14 @@
                     document.getElementById('explosion-sound').play();
                 }
             } else {
-                // Explosion
+               
                 firecracker.explosionRadius += 2;
                 if (firecracker.explosionRadius > 50) {
                     firecracker = null;
                 }
             }
         }
-        // drawScene();
+       
     }
 
     function createExplosion(x, y) {
@@ -285,15 +273,15 @@
             const speedX = Math.cos(angle) * speed;
             const speedY = Math.sin(angle) * speed;
 
-            const r = Math.floor(Math.random() * 256)+10; // Random value between 0 and 255 for red
-            const g = Math.floor(Math.random() * 256)+10; // Random value between 0 and 255 for green
-            const b = Math.floor(Math.random() * 256)+20; // Random value between 0 and 255 for blue
+            const r = Math.floor(Math.random() * 256)+10; 
+            const g = Math.floor(Math.random() * 256)+10; 
+            const b = Math.floor(Math.random() * 256)+20; 
 
     const color_p = `rgb(${r}, ${g}, ${b})`;
 
             particles.push(new Particle(x, y, 3, color_p, speedX, speedY));
         }
-        // console.log(particles)
+     
     }
 
     function drawParticles() {
@@ -307,22 +295,18 @@
         }
     }
 
-    // Click event handler
     
-
-    // Main draw function
     function draw() {
-        // ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+        
         
         drawFirecracker();
         animateFirecracker();
         drawParticles();
 
         requestAnimationFrame(draw);
-        // drawBackground();
+        
     }
 
-    // Start animation
     let global;
     canvas1.addEventListener('click', function(event) {
         const rect = canvas1.getBoundingClientRect();
@@ -333,4 +317,3 @@
     });
     draw();
 
-    // Start animation
